@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sprawdź swój los</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 15px;
+            border: 2px solid white;
+            border-radius: 10px;
+            max-width: 90%;
+            box-sizing: border-box;
+        }
+        input, button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1em;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+    <script>
+        const winningHashes = new Set([
+            "8235e6eb705ae6dfde1991127bf42548",
+            "49c0f3f69dd626b1e05b0cb945b212ad",
+            "0392818b32472a09b84f2b13908c1243",
+            "0a280e5c583ee394b68307770beb1232",
+            "550d739ca14cc37a7108bdd32e754a0e",
+            "ea8b6a931f465c3e749f32c4860201b5",
+            "4bb17f6d21c60097994239aedcd2f560",
+            "fac885d83a1ad0f0c718c655c411b82e",
+            "9d469f1cec9ba496632e25574a132201",
+            "2ed78d9d3099a31020e1909871e01d01",
+            "e47c5d02f6730ea06d2fecf0074a36b6",
+            "e402ddf82a3681ec2b6fa388d0e45877"
+        ]);
+        
+        function md5(string) {
+            return CryptoJS.MD5(string).toString();
+        }
+        
+        function checkNumber() {
+            const input = document.getElementById("lotteryNumber").value;
+            const message = document.getElementById("message");
+            const hashedInput = md5(input);
+            
+            if (winningHashes.has(hashedInput)) {
+                message.textContent = "Gratulacje! Twój los jest wygrany!";
+                message.style.color = "green";
+            } else {
+                message.textContent = "Niestety, nie tym razem.";
+                message.style.color = "red";
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Sprawdź swój los</h1>
+        <input type="text" id="lotteryNumber" placeholder="Wpisz 6-cyfrowy numer" maxlength="6">
+        <button onclick="checkNumber()">Sprawdź</button>
+        <div id="message" class="message"></div>
+    </div>
+</body>
+</html>
